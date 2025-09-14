@@ -27,6 +27,6 @@ class RegisterSerializer(serializers.ModelSerializer):
         # Force role to Tenant on self-signup
         user = User.objects.create_user(
             **validated_data,
-            role="Tenant"
+            role="tenant"
         )
         return user
