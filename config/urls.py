@@ -16,8 +16,20 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import path, include
+from .views import index
+from .views import AdminOnlySpectacularAPIView, AdminOnlySwaggerView, AdminOnlyRedocView
 
 urlpatterns = [
+    path('', index),
     path('admin/', admin.site.urls),
-    path('api/auth/', include('users.urls'))
+    path('api/auth/', include('users.urls')),
+    path('api-auth/', include('rest_framework.urls')),  # DRF browsable API login/logout
+    path('api/apartments/', include('apartments.urls')),
+    path('api/payments/', include('payments.urls')),
+    path('api/notices/', include('notices.urls')),
+    path('api/maintenance/', include('maintenance.urls')),
+    # OpenAPI schema and UIs (admin only)
+    path('api/schema/', AdminOnlySpectacularAPIView.as_view(), name='schema'),
+    path('api/docs/', AdminOnlySwaggerView.as_view(url_name='schema'), name='swagger-ui'),
+    path('api/redoc/', AdminOnlyRedocView.as_view(url_name='schema'), name='redoc'),
 ]
