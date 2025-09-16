@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     'maintenance',
     'rest_framework',
     'rest_framework_simplejwt',
+    'drf_spectacular',
 ]
 
 MIDDLEWARE = [
@@ -111,6 +112,24 @@ REST_FRAMEWORK = {
     'DEFAULT_PERMISSION_CLASSES':(
         'rest_framework.permissions.IsAuthenticated',
     ),
+    'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
+}
+
+# drf-spectacular / OpenAPI
+SPECTACULAR_SETTINGS = {
+    'TITLE': 'Apartment Management API',
+    'DESCRIPTION': 'API for managing apartments, units, payments, notices, and maintenance with role-based permissions.',
+    'VERSION': '1.0.0',
+    # keep schema served separately from swagger ui json
+    'SERVE_INCLUDE_SCHEMA': False,
+    # enable JWT authorize button and persist tokens
+    'SWAGGER_UI_SETTINGS': {
+        'persistAuthorization': True,
+    },
+    # Use the auto-detected JWT scheme name from DEFAULT_AUTHENTICATION_CLASSES (jwtAuth)
+    'SECURITY': [
+        {'jwtAuth': []},
+    ],
 }
 
 
